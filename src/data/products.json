@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "status": true,
+    "title": "Remera negra",
+    "description": "Remera básica color negro",
+    "code": "RM001",
+    "price": 1500,
+    "stock": 50,
+    "category": "Ropa",
+    "thumbnails": [
+      "http://example.com/remera.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "status": true,
+    "title": "Remera negra",
+    "description": "Remera básica color negro",
+    "code": "RM001",
+    "price": 1500,
+    "stock": 50,
+    "category": "Ropa",
+    "thumbnails": [
+      "http://example.com/remera.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "status": true,
+    "title": "Remera negra",
+    "description": "Remera básica color negro",
+    "code": "RM001",
+    "price": 1500,
+    "stock": 50,
+    "category": "Ropa",
+    "thumbnails": [
+      "http://example.com/remera.jpg"
+    ]
+  },
+  {
+    "id": 4,
+    "status": true,
+    "title": "Remera negra",
+    "description": "Remera básica color negro",
+    "code": "RM001",
+    "price": 1500,
+    "stock": 50,
+    "category": "Ropa",
+    "thumbnails": [
+      "http://example.com/remera.jpg"
+    ]
+  }
+]
