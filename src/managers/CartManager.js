@@ -18,7 +18,9 @@ class CartManager {
 
   async createCart() {
     const carts = await this.getCarts();
-    const newCart = { id: carts.length + 1, products: [] };
+    const newId =
+      carts.length > 0 ? Math.max(...carts.map((c) => c.id)) + 1 : 1;
+    const newCart = { id: newId, products: [] };
     carts.push(newCart);
     await fs.writeFile(this.path, JSON.stringify(carts, null, 2));
     return newCart;

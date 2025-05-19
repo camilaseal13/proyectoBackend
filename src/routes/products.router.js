@@ -18,46 +18,26 @@ router.get("/:pid", async (req, res) => {
 
 // Agregar un producto nuevo
 router.post("/", async (req, res) => {
-  const {
-    title,
-    description,
-    code,
-    price,
-    stock,
-    category,
-    thumbnails,
-    status,
-  } = req.body;
-
-  if (
-    !title ||
-    !description ||
-    !code ||
-    !price ||
-    !stock ||
-    !category ||
-    !thumbnails ||
-    status === undefined
-  ) {
-    return res.status(400).send("Todos los campos son obligatorios.");
-  }
-
   try {
     const product = await productManager.addProduct(req.body);
     res.status(201).json(product);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 });
 
 // Actualizar producto
 router.put("/:pid", async (req, res) => {
-  const updated = await productManager.updateProduct(
-    parseInt(req.params.pid),
-    req.body
-  );
-  if (!updated) return res.status(404).send("Producto no encontrado");
-  res.json(updated);
+  try {
+    const updated = await productManager.updateProduct(
+      parseInt(req.params.pid),
+      req.body
+    );
+    if (!updated) return res.status(404).send("Producto no encontrado");
+    res.json(updated);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 // Eliminar producto

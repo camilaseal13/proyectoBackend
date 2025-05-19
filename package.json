@@ -12,6 +12,8 @@
   "description": "",
   "dependencies": {
     "express": "^5.1.0",
-    "nodemod": "^3.0.6"
+    "express-handlebars": "^8.0.3",
+    "nodemod": "^3.0.6",
+    "socket.io": "^4.8.1"
   }
 }

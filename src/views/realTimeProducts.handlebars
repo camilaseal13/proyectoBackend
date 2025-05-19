@@ -1,0 +1,77 @@
+<h1>Agregar producto en tiempo real</h1>
+
+<form id="productForm">
+  <input name="title" placeholder="Título" required />
+  <input name="description" placeholder="Descripción" required />
+  <input name="code" placeholder="Código" required />
+  <input name="price" placeholder="Precio" type="number" step="0.01" required />
+  <input name="stock" placeholder="Stock" type="number" required />
+  <input name="category" placeholder="Categoría" required />
+  <input name="thumbnail" placeholder="URL Imagen" />
+  <button type="submit">Agregar producto</button>
+</form>
+
+<h2>Lista de productos actualizada</h2>
+<ul id="productList"></ul>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+  const socket = io();
+  const form = document.getElementById("productForm");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const product = {
+      title: form.title.value.trim(),
+      description: form.description.value.trim(),
+      code: form.code.value.trim(),
+      price: parseFloat(form.price.value),
+      stock: parseInt(form.stock.value),
+      category: form.category.value.trim(),
+      thumbnails: [form.thumbnail.value.trim()],
+      status: true,
+    };
+
+    socket.emit("newProduct", product, (response) => {
+      if (response?.error) {
+        Swal.fire({
+          icon: "error",
+          title: "¡Error!",
+          text: response.error,
+        });
+      } else {
+        form.reset();
+      }
+    });
+  });
+
+  socket.on("productList", (products) => {
+    const list = document.getElementById("productList");
+    list.innerHTML = "";
+
+    products.forEach((p) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        ${p.title} - $${p.price}
+        <button onclick="deleteProduct(${p.id})">Eliminar</button>
+      `;
+      list.appendChild(li);
+    });
+  });
+
+  function deleteProduct(id) {
+    socket.emit("deleteProduct", id, (response) => {
+      if (response?.error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error al eliminar",
+          text: response.error,
+        });
+      }
+    });
+  }
+</script>
