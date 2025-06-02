@@ -1,0 +1,47 @@
+
+<h1>Productos</h1>
+
+<div>
+  {{#each products}}
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+      <h2>{{this.title}}</h2>
+      <p>{{this.description}}</p>
+      <p><strong>Precio:</strong> ${{this.price}}</p>
+      <p><strong>Categoría:</strong> {{this.category}}</p>
+      <p><strong>Stock:</strong> {{this.stock}}</p>
+      <a href="/products/{{this._id}}">Ver detalles</a> |
+      <button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+    </div>
+  {{/each}}
+</div>
+
+<div>
+  {{#if hasPrevPage}}
+    <a href="{{prevLink}}">Anterior</a>
+  {{/if}}
+
+  Página {{page}} de {{totalPages}}
+
+  {{#if hasNextPage}}
+    <a href="{{nextLink}}">Siguiente</a>
+  {{/if}}
+</div>
+
+<script>
+function addToCart(productId) {
+  const cartId = localStorage.getItem("cartId"); // Asumiendo que tienes un cartId guardado
+  if (!cartId) {
+    return alert("No hay un carrito creado. Crea o selecciona uno.");
+  }
+
+  fetch(`/api/carts/${cartId}/products/${productId}`, {
+    method: "POST"
+  }).then(res => {
+    if (res.ok) {
+      alert("Producto agregado al carrito");
+    } else {
+      alert("Error al agregar al carrito");
+    }
+  });
+}
+</script>
